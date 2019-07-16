@@ -1,0 +1,39 @@
+{
+  "name": "tab-race",
+  "version": "1.0.0",
+  "description": "A solution for race conditions between browser threads",
+  "main": "tab-race.js",
+  "scripts": {
+    "test": "standard && browserify -r ./tab-race.js:tab-race tab-race.js > bundle.js && node test.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kayleepop/tab-race.git"
+  },
+  "keywords": [
+    "worker",
+    "thread",
+    "race",
+    "condition",
+    "idb",
+    "add",
+    "multiple",
+    "tab",
+    "single",
+    "winner"
+  ],
+  "author": "Kayleepop",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/kayleepop/tab-race/issues"
+  },
+  "homepage": "https://github.com/kayleepop/tab-race#readme",
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "muggle-assert": "^1.1.3",
+    "muggle-test": "^1.0.0",
+    "puppeteer": "^1.18.1",
+    "standard": "^13.0.1",
+    "tap-spec": "^5.0.0"
+  }
+}
