@@ -31,7 +31,7 @@ async function runOnNewPage (browser, asyncFunc) {
   return runOnPage(page, asyncFunc)
 }
 
-test(`race should only be won by one tab`, async () => {
+test('race should only be won by one tab', async () => {
   // run 10 times to ensure consistency
   for (let i = 1; i <= 10; i++) {
     const browser = await puppeteer.launch()
@@ -58,7 +58,7 @@ test(`race should only be won by one tab`, async () => {
   }
 })
 
-test(`endRace() resets to allow one new winner`, async () => {
+test('endRace() resets to allow one new winner', async () => {
   // run 10 times to ensure consistency
   for (let i = 1; i <= 10; i++) {
     const browser = await puppeteer.launch()
@@ -92,7 +92,7 @@ test(`endRace() resets to allow one new winner`, async () => {
   }
 })
 
-test(`endRace() finishes in unload handler`, async () => {
+test('endRace() finishes in unload handler', async () => {
   // run 10 times to ensure consistency
   for (let i = 1; i <= 10; i++) {
     const browser = await puppeteer.launch()
