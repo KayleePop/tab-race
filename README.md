@@ -1,6 +1,8 @@
 # Tab Race
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/KayleePop/tab-race.svg)](https://greenkeeper.io/) [![Travis badge](https://travis-ci.org/KayleePop/tab-race.svg?branch=master)](https://travis-ci.org/KayleePop/tab-race) [![standard badge](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com) [![npm](https://img.shields.io/npm/v/tab-race.svg)](https://www.npmjs.com/package/tab-race)
+[![Node.js CI](https://github.com/KayleePop/tab-race/workflows/Node.js%20CI/badge.svg)](https://github.com/KayleePop/tab-race/actions)
+[![standard badge](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![npm](https://img.shields.io/npm/v/tab-race.svg)](https://www.npmjs.com/package/tab-race)
 
 A solution for race conditions between browser threads.
 
