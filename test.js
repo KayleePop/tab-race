@@ -36,25 +36,27 @@ test('race should only be won by one tab', async () => {
   for (let i = 1; i <= 10; i++) {
     const browser = await puppeteer.launch()
 
-    // run it on 20 separate pages
-    const promises = []
-    for (let i = 0; i < 20; i++) {
-      promises.push(
-        runOnNewPage(browser, async () => {
-          const { race } = require('tab-race')
+    try {
+      // run it on 20 separate pages
+      const promises = []
+      for (let i = 0; i < 20; i++) {
+        promises.push(
+          runOnNewPage(browser, async () => {
+            const { race } = require('tab-race')
 
-          return race('one-tab-test')
-        })
-      )
+            return race('one-tab-test')
+          })
+        )
+      }
+
+      const results = await Promise.all(promises)
+
+      const numWinners = results.filter((result) => result === true).length
+
+      assert.equal(numWinners, 1, 'there should be exactly one winner')
+    } finally {
+      browser.close()
     }
-
-    const results = await Promise.all(promises)
-
-    const numWinners = results.filter((result) => result === true).length
-
-    assert.equal(numWinners, 1, 'there should be exactly one winner')
-
-    browser.close()
   }
 })
 
@@ -63,32 +65,34 @@ test('endRace() resets to allow one new winner', async () => {
   for (let i = 1; i <= 10; i++) {
     const browser = await puppeteer.launch()
 
-    await runOnNewPage(browser, async () => {
-      const { endRace, race } = require('tab-race')
+    try {
+      await runOnNewPage(browser, async () => {
+        const { endRace, race } = require('tab-race')
 
-      await race('endrace-test')
-      endRace('endrace-test')
-    })
+        await race('endrace-test')
+        endRace('endrace-test')
+      })
 
-    // run it on 10 separate pages
-    const promises = []
-    for (let i = 0; i < 10; i++) {
-      promises.push(
-        await runOnNewPage(browser, async () => {
-          const { race } = require('tab-race')
+      // run it on 10 separate pages
+      const promises = []
+      for (let i = 0; i < 10; i++) {
+        promises.push(
+          await runOnNewPage(browser, async () => {
+            const { race } = require('tab-race')
 
-          return race('endrace-test')
-        })
-      )
+            return race('endrace-test')
+          })
+        )
+      }
+
+      const results = await Promise.all(promises)
+
+      const numWinners = results.filter((result) => result === true).length
+
+      assert.equal(numWinners, 1, 'there should be exactly one winner')
+    } finally {
+      browser.close()
     }
-
-    const results = await Promise.all(promises)
-
-    const numWinners = results.filter((result) => result === true).length
-
-    assert.equal(numWinners, 1, 'there should be exactly one winner')
-
-    browser.close()
   }
 })
 
@@ -97,25 +101,27 @@ test('endRace() finishes in unload handler', async () => {
   for (let i = 1; i <= 10; i++) {
     const browser = await puppeteer.launch()
 
-    const page = await browser.newPage()
+    try {
+      const page = await browser.newPage()
 
-    await runOnPage(page, async () => {
-      const { endRace, race } = require('tab-race')
+      await runOnPage(page, async () => {
+        const { endRace, race } = require('tab-race')
 
-      await race('endRace-sync-test')
-      window.onunload = () => endRace('endRace-sync-test')
-    })
+        await race('endRace-sync-test')
+        window.onunload = () => endRace('endRace-sync-test')
+      })
 
-    await page.close({ runBeforeUnload: true })
+      await page.close({ runBeforeUnload: true })
 
-    const result = await runOnNewPage(browser, async () => {
-      const { race } = require('tab-race')
+      const result = await runOnNewPage(browser, async () => {
+        const { race } = require('tab-race')
 
-      return race('endRace-sync-test')
-    })
+        return race('endRace-sync-test')
+      })
 
-    assert.equal(result, true, 'race should have ended')
-
-    browser.close()
+      assert.equal(result, true, 'race should have ended')
+    } finally {
+      browser.close()
+    }
   }
 })
